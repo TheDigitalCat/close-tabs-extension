@@ -1,62 +1,164 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <style>
     body {
-      width: 300px;
-      padding: 15px;
+      width: 600px;
+      max-height: 700px;
+      padding: 5px;
       font-family: Arial, sans-serif;
+      margin: 0;
     }
+
     h3 {
       margin-top: 0;
+      margin-bottom: 15px;
       color: #333;
     }
-    input {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
+
+    #duplicatesList {
+      max-height: 500px;
+      overflow-y: auto;
     }
-    button {
-      width: 100%;
+
+    .duplicate-group {
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
       padding: 10px;
-      background-color: #4CAF50;
+      background-color: #f9f9f9;
+    }
+
+    .duplicate-item {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      margin-bottom: 5px;
+      background-color: white;
+      border-radius: 4px;
+      border: 1px solid #e0e0e0;
+    }
+
+    .duplicate-item.active-tab {
+      background-color: #e3f2fd;
+      border: 1px solid #2196f3;
+    }
+
+    .duplicate-item:hover {
+      background-color: #f5f5f5;
+    }
+
+    .close-btn {
+      padding: 4px 10px;
+      background-color: #f44336;
       color: white;
       border: none;
-      border-radius: 4px;
+      border-radius: 3px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 12px;
+      margin-right: 10px;
+      flex-shrink: 0;
     }
-    button:hover {
-      background-color: #45a049;
+
+    .close-btn:hover {
+      background-color: #d32f2f;
     }
-    #status {
-      margin-top: 10px;
+
+    .favicon {
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .tab-info {
+      flex-grow: 1;
+      min-width: 0;
+    }
+
+    .domain {
+      font-weight: bold;
+      color: #1a73e8;
+      font-size: 13px;
+    }
+
+    .title {
+      color: #5f6368;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 300px;
+      background-color: #333;
+      color: #fff;
+      text-align: left;
+      border-radius: 6px;
       padding: 8px;
-      border-radius: 4px;
-      display: none;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -150px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 11px;
+      word-wrap: break-word;
     }
-    .success {
-      background-color: #d4edda;
-      color: #155724;
-      border: 1px solid #c3e6cb;
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
     }
-    .error {
-      background-color: #f8d7da;
-      color: #721c24;
-      border: 1px solid #f5c6cb;
+
+    #noDuplicates {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
+
+    .group-header {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .domain-group-container {
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .domain-header {
+      background-color: #e8f0fe;
+      padding: 10px;
+      font-weight: bold;
+      color: #1967d2;
+      border-bottom: 1px solid #ccc;
     }
   </style>
 </head>
+
 <body>
-  <h3>Закрыть вкладки</h3>
-  <input type="text" id="urlInput" placeholder="Введите URL или часть URL">
-  <button id="closeBtn">Закрыть вкладки</button>
-  <div id="status"></div>
+  <h3>Дублирующиеся вкладки</h3>
+  <div id="duplicatesList"></div>
+  <div id="noDuplicates" style="display: none;">
+    Дублирующихся вкладок не найдено
+  </div>
 
   <script src="popup.js"></script>
 </body>
+
 </html>
